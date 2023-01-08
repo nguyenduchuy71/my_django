@@ -1,0 +1,47 @@
+{% include "polls/base.html" %} 
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  <div
+    class="modal fade"
+    id="modalUpdate"
+    tabindex="-1"
+    aria-labelledby="modalUpdateLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalUpdateLabel">Update Post</h5>
+          <a href="{% url 'polls:mypost'%}">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </a>
+        </div>
+        <div class="modal-body form-control">{{ form.as_p }}</div>
+        <div class="modal-footer">
+          <a href="{% url 'polls:mypost'%}">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </a>
+          <button type="submit" class="btn btn-danger">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<script>
+  $(document).ready(function () {
+    $("#modalUpdate").modal("show");
+  });
+</script>
+{% endblock %}

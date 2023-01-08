@@ -1,0 +1,8 @@
+li a {
+    color: green;
+    text-decoration: none;
+}
+li a:hover{
+    color: blue;
+    text-decoration: underline;
+}

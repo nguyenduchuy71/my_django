@@ -1,0 +1,11 @@
+{% extends "polls/base.html" %} 
+{% block title %} Home page {% endblock %} 
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+        <h2>Welcome to home page</h2>
+        <img style="width:240px;height:240px;object-fit:cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUsh3_LlBrKlXNgNkRxEZdsM2rY7bNBlfuBmRMRcEwf83APKSZSIivKkeMN2774YhRzBw&usqp=CAU" alt="logo-django" />
+        <a href="{% url 'polls:index' %}" style="width:120px;" type="button" class="btn btn-success mt-4">Go to blog</a>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,73 @@
+{% extends "polls/base.html" %} 
+{% block title %} My blog {% endblock %} 
+{% block content %}
+<div class="container-fluid mt-4">
+  {% if posts %}
+  <div class="row">
+    {% for post in posts %}
+    <div class="col-xl-3 col-md-6 my-2">
+      <div class="card" style="height: 220px">
+        <div class="card-body">
+          <h4
+            class="card-title"
+            style="
+              font-weight:700;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 1;
+              line-clamp: 1;
+              -webkit-box-orient: vertical;
+            "
+          >
+            {{post.post_title}}
+          </h4>
+          <div style="height: 60px">
+            <p
+              class="card-text"
+              style="
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+                font-size: 18px;
+              "
+            >
+              {{post.post_content}}
+            </p>
+          </div>
+          <a href="{% url 'polls:detail' post.id %}" class="btn btn-primary"
+            >View detail</a
+          >
+        </div>
+        <div
+          class="card-footer d-flex justify-content-between"
+          style="height: max-content"
+        >
+          <div class="d-flex align-items-center">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <span style="font-size:15px; margin-left:2px;">{{post.post_created}}</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <img src="{{post.author.profile.avatar.url}}" alt="user-avatar" class="rounded-circle" style="width:34px; height:34px; object-fit:cover" />
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %} {% if not posts %}
+  <div class="d-flex w-full h-full justify-content-center">
+    <img
+      src="https://cdn.dribbble.com/users/888330/screenshots/2653750/empty_data_set.png"
+      alt="empty_img"
+    />
+  </div>
+  {% endif %}
+</div>
+<div class="d-flex justify-content-center">
+  {% include "polls/pagination.html" %}
+</div>
+{% endblock content %}

@@ -1,0 +1,55 @@
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="addBlogModel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addBlogModel">New post</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form method="post" action="{% url 'polls:create' %}">
+        <div class="modal-body">
+          {% csrf_token %}
+          <div class="form-group my-2">
+            <label>Title</label>
+            <input
+              type="text"
+              name="title"
+              class="form-control"
+              id="title"
+              placeholder="Enter title"
+              required
+            />
+          </div>
+          <div class="form-group my-2">
+            <label>Content</label>
+            <textarea
+              class="form-control"
+              id="content"
+              type="text"
+              name="content"
+              placeholder="Enter content"
+              aria-label="With textarea"
+              required
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-success">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

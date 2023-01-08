@@ -1,0 +1,79 @@
+{% extends "polls/base.html" %} {% block title %} Detail Post {% endblock %}
+{%block content %}
+<div
+  class="container d-flex flex-column justify-content-center mt-4"
+  style="min-width: 60%"
+>
+  <div class="mx-auto my-4" style="min-height: max-content; width: 100%">
+    <div class="my-2 fs-5 border-bottom pb-1">
+      <h3 style="font-weight: 700">{{ post.post_title }}</h3>
+      <div class="d-flex flex-wrap align-items-center">
+        <div class="d-flex align-items-center me-4">
+          <img
+            src="{{post.author.profile.avatar.url}}"
+            alt="user-avatar"
+            class="rounded-circle"
+            style="width: 32px; height: 32px; object-fit: cover"
+          />
+        </div>
+        <div class="d-flex align-items-center me-4">
+          <ion-icon name="chatbox-ellipses-outline" class="me-1"></ion-icon>
+          <span>{{ post.post_comment_count }}</span>
+        </div>
+        <div class="d-flex align-items-center me-4">
+          <ion-icon name="calendar-outline" class="me-1"></ion-icon>
+          <span>{{ post.post_created }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="p-2 border border-dark rounded">
+      <p style="word-break: keep-all">{{ post.post_content }}</p>
+    </div>
+  </div>
+  {% for comment in comments %}
+  <div class="my-2 fs-5 border-bottom" style="width: 100%; height: max-content">
+    <div class="d-flex flex-wrap align-items-center">
+      <div class="d-flex align-items-center me-4">
+        <img
+          src="{{comment.author.profile.avatar.url}}"
+          alt="user-avatar"
+          class="rounded-circle"
+          style="width: 32px; height: 32px; object-fit: cover"
+        />
+      </div>
+      <div class="d-flex align-items-center me-4">
+        <ion-icon name="calendar-outline" class="me-1"></ion-icon>
+        <span>{{ comment.comment_created }}</span>
+      </div>
+    </div>
+    <p class="mt-1">{{comment.comment_content}}</p>
+  </div>
+  {% endfor %}
+  <div
+    class="my-2 py-3 px-4 mx-auto rounded"
+    style="background-color: #dde4f0; width: 100%"
+  >
+    <form
+      method="POST"
+      action="{% url 'polls:comment' post.id %}"
+      class="d-flex justify-content-between align-items-stretch"
+      id="formComment"
+    >
+      {% csrf_token %}
+      <input
+        type="text"
+        placeholder="Add a comment"
+        style="width: 100%; height: 36px"
+        name="comment"
+        required
+      />
+      <button
+        type="submit"
+        class="btn btn-primary ms-2 d-flex align-items-center"
+      >
+        <ion-icon name="send-outline"></ion-icon>
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

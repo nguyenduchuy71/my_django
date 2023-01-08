@@ -1,0 +1,64 @@
+{% extends "polls/base.html" %} {% block title %}Profile Page{% endblock title %} {% block content %}
+<div class="d-flex flex-column align-items-center">
+  <div class="row my-1 p-3">
+    <img
+      class="rounded-circle account-img"
+      src="{{ user.profile.avatar.url }} "
+      style="cursor: pointer; object-fit: contain"
+    />
+  </div>
+  {% if user_form.errors %}
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <div id="form_errors">
+      {% for key, value in user_form.errors.items %}
+      <strong>{{ value }}</strong>
+      {% endfor %}
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %}
+  <div class="form-content d-flex flex-column align-items-center">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="col-12">
+          <div class="form-group">
+            <label class="small mb-1">Username:</label>
+            <input
+              type="text"
+              class="form-control"
+              value="{{user.username}}"
+              disabled
+            />
+            <label class="small mb-1">Email:</label>
+            <input
+              type="text"
+              class="form-control"
+              value="{{user.email}}"
+              disabled
+            />
+            <label class="small mb-1">First name:</label>
+            {{ user_form.first_name }}
+            <label class="small mb-1">Last name:</label>
+            {{ user_form.last_name }}
+          </div>
+          <div class="form-group mt-1">
+            <a href="{% url 'accounts:password_change' %}">Change Password</a>
+            <hr />
+            <label class="small mb-1">Change Avatar:</label>
+            {{ profile_form.avatar }}
+          </div>
+          <label class="small mb-1">Bio:</label> {{ profile_form.bio }}
+        </div>
+      </div>
+      <div class="d-flex justify-content-center my-2">
+        <button type="submit" class="btn btn-primary btn-md">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}
