@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           python-version: 3.7
-      - run: apt install python3.7-venv
+      - run: pip install virtualenv
       - run: python3 -m venv env
       - run: source env/bin/activate
       - run: pip install --upgrade pip
