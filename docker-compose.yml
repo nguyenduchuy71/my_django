@@ -1,8 +1,8 @@
-version: "3.7"
+# version: "3.7"
 
-services:
-  app:
-    image: registry.gitlab.com/ndhuy-tma/django-app
-    ports:
-      - "8000:8000"
-    restart: unless-stopped
+# services:
+#   app:
+#     image: registry.gitlab.com/ndhuy-tma/django-app
+#     ports:
+#       - "8000:8000"
+#     restart: unless-stopped
