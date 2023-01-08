@@ -13,4 +13,4 @@ jobs:
           python-version: 3.7
       - run: pip install -r requirements.txt
       - name: Unit tests
-        run: python3 -m unittest ./test/test_polls.py
+        run: python3 -m unittest test/test_polls.py
