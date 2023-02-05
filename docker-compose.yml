@@ -1,19 +1,23 @@
-version: "3.7"
+version: '3.7'
+
 
 services:
   db:
-    image: postgres:14.6-alpine
-    environment:
-        - POSTGRES_DB=${POSTGRES_DB}
-        - POSTGRES_USER=${POSTGRES_USER}
-        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    image: postgres:13.3-alpine
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data/
+    env_file: .env
   web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:${PORT}
-    volumes:
-        - .:/app
+    build:
+      context: .
+    command: sh -c "python manage.py migrate & python manage.py runserver 0.0.0.0:8000"
     ports:
       - "${PUBLIC_PORT}:${PORT}"
-    depends_on:
-        - db
-    restart: unless-stopped
+    env_file: .env
+    volumes: 
+      - .:/usr/src/app
+    depends_on: 
+      - db
+
+volumes:
+  postgres_data:

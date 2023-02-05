@@ -8,7 +8,9 @@ linecache2==1.0.0
 packaging==22.0
 Pillow==9.4.0
 pluggy==1.0.0
+psycopg2-binary==2.9.5
 pytest==7.2.0
+python-dotenv==0.21.1
 pytz==2022.7
 six==1.16.0
 sqlparse==0.4.3
@@ -17,5 +19,4 @@ traceback2==1.4.0
 typing_extensions==4.4.0
 unittest2==1.1.0
 zipp==3.11.0
-psycopg2-binary>=2.8
-python-dotenv
+django-environ
