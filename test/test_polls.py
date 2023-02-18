@@ -7,5 +7,3 @@ class TestIndexView(unittest.TestCase):
     def test_getdemo(self):
         self.assertEqual(2, 2)
 
-    def test_getdemo_data(self):
-        self.assertEqual(3, 3)
