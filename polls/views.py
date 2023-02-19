@@ -1,12 +1,14 @@
+import smtplib, ssl
+from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, F
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
-
 from .forms import FormUpdatePost
 from .models import Post, Comment
+from .settings import SENDER_EMAIL, SMTP_SERVER, SMTP_PORT, EMAIL_PASSWORD
 
 
 class IndexView(LoginRequiredMixin, generic.ListView):
@@ -99,3 +101,31 @@ class CreateCommentView(LoginRequiredMixin, generic.View):
         post.save()
         comment.save()
         return redirect('polls:detail', pk=post_id)
+
+
+class SenMailView(LoginRequiredMixin, generic.View):
+    login_url = '/accounts/login/'
+    template_name = 'polls/sendmail.html'
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name)
+    
+    def post(self, *args, **kwargs):
+        try:
+            receiver_email = self.request.POST['email']
+            message = self.request.POST['message']
+            message_error = 'Send email fail!'
+            if receiver_email and message:
+                try:
+                    context = ssl.create_default_context()
+                    with smtplib.SMTP_SSL(host=SMTP_SERVER, port=SMTP_PORT, context=context) as server:
+                        server.login(SENDER_EMAIL, EMAIL_PASSWORD)
+                        server.sendmail(SENDER_EMAIL, receiver_email, message)
+                    message_success = 'Email is sent successfully!'
+                    return JsonResponse({'message': message_success}, status=200)
+                except Exception:
+                    return JsonResponse({'message_error': message_error}, status=400)
+            else:
+                return JsonResponse({'message_error': message_error}, status=400)
+        except Exception:
+            return JsonResponse({'message_error': 'Sever error!'}, status=500)

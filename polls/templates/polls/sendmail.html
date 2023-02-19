@@ -1,0 +1,65 @@
+{% extends "polls/base.html" %} 
+{% block content %}
+<div class="container-fluid mt-4" style="max-width: 60%; margin: 0 auto;">
+    <div>
+        <div class="mb-3">
+        <label for="email" class="form-label">Your email address</label>
+        <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <input type="text" class="form-control" id="message">
+        </div>
+        <button  id="btn_send" type="button" class="btn btn-primary">Send</button>
+    </div>
+    <div class="list__message">
+        <div class="alert hide" id="error__message">
+            <span class="closebtn">&times;</span>  
+            <strong>Error!</strong>
+            <span class="message__error__text"></span>
+          </div>
+        <div class="alert success hide" id="success__message">
+            <span class="closebtn">&times;</span>  
+            <strong>Success!</strong>
+            <span class="message__text"></span>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var close = document.getElementsByClassName("closebtn");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function(){
+                var div = this.parentElement;
+                div.style.opacity = "0";
+                setTimeout(function(){ div.style.display = "none"; }, 600);
+            }
+        }
+        $("#btn_send").on("click", () => {
+            $("#btn_send").prop("disabled", true);
+            let message = $('#message').val();
+            let email = $('#email').val();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'polls:sendmail' %}",
+                data: {
+                    message: message,
+                    email: email,
+                    csrfmiddlewaretoken: '{{ csrf_token }}'
+                },
+                success: function (response) {
+                    $("#success__message").removeClass("hide");
+                    $('.message__text').text(response.message);
+                    $("#btn_send").prop("disabled", false);
+                },
+                error: function (response) {
+                    $("#error__message").removeClass("hide");
+                    $('.message__error__text').text(response['responseJSON']['message_error']);
+                    $("#btn_send").prop("disabled", false);
+                }
+            });
+        });
+    });
+</script>
+{% endblock content %}
