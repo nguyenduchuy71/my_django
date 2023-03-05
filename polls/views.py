@@ -1,4 +1,4 @@
-import smtplib, ssl
+import smtplib, ssl, requests
 from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -114,18 +114,32 @@ class SenMailView(LoginRequiredMixin, generic.View):
         try:
             receiver_email = self.request.POST['email']
             message = self.request.POST['message']
-            message_error = 'Send email fail!'
-            if receiver_email and message:
-                try:
-                    context = ssl.create_default_context()
-                    with smtplib.SMTP_SSL(host=SMTP_SERVER, port=SMTP_PORT, context=context) as server:
-                        server.login(SENDER_EMAIL, EMAIL_PASSWORD)
-                        server.sendmail(SENDER_EMAIL, receiver_email, message)
-                    message_success = 'Email is sent successfully!'
-                    return JsonResponse({'message': message_success}, status=200)
-                except Exception:
-                    return JsonResponse({'message_error': message_error}, status=400)
-            else:
-                return JsonResponse({'message_error': message_error}, status=400)
+            url = 'http://localhost:5555/send_mail'
+            body = {'receiver_email': receiver_email, 'message': message}
+            res = requests.post(url, json=body, verify=False)
+            if res.status_code == 200:
+                return JsonResponse({'message': 'Email is sent successfully!'}, status=200)
+            return JsonResponse({'message_error': 'Send email fail!'}, status=400)
         except Exception:
             return JsonResponse({'message_error': 'Sever error!'}, status=500)
+        # try:
+        #     receiver_email = self.request.POST['email']
+        #     message = self.request.POST['message']
+        #     message_error = 'Send email fail!'
+        #     url = 'localhost:5555/send_mail'
+        #     myobj = {'receiver_email': receiver_email, 'message': message}
+        #     res = requests.post(url, json = myobj)
+        #     if receiver_email and message:
+        #         try:
+        #             context = ssl.create_default_context()
+        #             with smtplib.SMTP_SSL(host=SMTP_SERVER, port=SMTP_PORT, context=context) as server:
+        #                 server.login(SENDER_EMAIL, EMAIL_PASSWORD)
+        #                 server.sendmail(SENDER_EMAIL, receiver_email, message)
+        #             message_success = 'Email is sent successfully!'
+        #             return JsonResponse({'message': message_success}, status=200)
+        #         except Exception:
+        #             return JsonResponse({'message_error': message_error}, status=400)
+        #     else:
+        #         return JsonResponse({'message_error': message_error}, status=400)
+        # except Exception:
+        #     return JsonResponse({'message_error': 'Sever error!'}, status=500)
