@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           python-version: 3.9
-      - run: sudo apt install python3.9-venv
+      - run: sudo apt install python3.9-venv -y
       - run: pip install virtualenv
       - run: python3 -m venv env
       - run: source env/bin/activate
