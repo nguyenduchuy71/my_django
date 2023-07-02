@@ -91,5 +91,5 @@ def profile(request):
 
 def logout_view(request):
     logout(request)
-    messages.info(request, "Logged out successfully!")
+    messages.success(request, "Logged out successfully!")
     return redirect('accounts:login')
