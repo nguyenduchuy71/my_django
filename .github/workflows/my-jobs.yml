@@ -10,15 +10,15 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          python-version: 3.8
-      - run: sudo apt-get install python3.8-venv
+          python-version: 3.9
+      - run: sudo apt install python3.9-venv -y
       - run: pip install virtualenv
-      - run: python3 -m venv env
+      - run: python3.9 -m venv env
       - run: source env/bin/activate
       - run: pip install --upgrade pip
       - run: pip install -r requirements.txt
       - name: Unit tests
-        run: python3 -m unittest test/*.py
+        run: python3.9 -m unittest test/*.py
 
   build:
     runs-on: ubuntu-latest
