@@ -16,13 +16,13 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-
 ## Run
 
 ```bash
+python3 manage.py makemigrations
+python manage.py migrate
 python3 manage.py runserver
 ```
-
 
 ## License
 
