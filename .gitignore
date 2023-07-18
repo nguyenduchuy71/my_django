@@ -10,7 +10,7 @@ kubernetes-config
 *.so
 
 
-env/
+# env/
 
 # Distribution / packaging
 .Python

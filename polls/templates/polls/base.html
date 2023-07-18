@@ -205,15 +205,16 @@
               </ul>
             </div>
             {% elif not user.is_authenticated %}
-            <div class="">
-              <a class="text-decoration-none" href="{% url 'accounts:login' %}">
-                <button type="button" class="btn btn-primary">Login</button>
+            <div style="display: flex; align-items: center;">
+              <a class="text-decoration-none" style="margin-right: 20px; " href="{% url 'accounts:login' %}">
+                <button type="button" style="width: 100px;" class="btn btn-primary">Login</button>
               </a>
               <a
                 class="text-decoration-none"
+                style="margin-right: 20px;"
                 href="{% url 'accounts:register' %}"
               >
-                <button type="button" class="btn btn-primary">Sign Up</button>
+                <button type="button" style="width: 100px;" class="btn btn-primary">Sign Up</button>
               </a>
             </div>
             {% endif %}

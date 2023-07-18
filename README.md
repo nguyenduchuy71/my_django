@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 ```bash
 python3 manage.py makemigrations
-python manage.py migrate
+python3 manage.py migrate
 python3 manage.py runserver
 ```
 
