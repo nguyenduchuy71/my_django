@@ -12,6 +12,6 @@ RUN apk add -u zlib-dev jpeg-dev gcc musl-dev
 
 RUN python3 -m pip install --upgrade pip
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --no-cache-dir
 
-EXPOSE 5555
+EXPOSE 8000

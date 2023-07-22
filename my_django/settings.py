@@ -24,7 +24,8 @@ environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+REDIS_HOST = os.getenv("REDIS_HOST", "127.0.0.1")
+REDIS_PORT = os.getenv("REDIS_PORT", 6379)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -38,6 +39,9 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 SESSION_COOKIE_AGE = 60 * 60 * 24
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 # Application definition
 
@@ -97,25 +101,18 @@ WSGI_APPLICATION = 'my_django.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'HOST': os.getenv('POSTGRES_DB_HOST'),
-    #     'NAME': os.getenv('POSTGRES_DB_NAME'),
-    #     'USER': os.getenv('POSTGRES_USER'),
-    #     'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-    #     'PORT': os.getenv('POSTGRES_PORT'),
-    #     "ENGINE": "django.db.backends.postgresql_psycopg2",
-    #     "NAME": "postgres",
-    #     "USER": "postgres",
-    #     "PASSWORD": "postgres",
-    #     "HOST": "db",  # set in docker-compose.yml
-    #     "PORT": 5432,  # default postgres port
-    # }
-    # 'default': env.db()
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'HOST': os.getenv('POSTGRES_DB_HOST'),
+        'NAME': os.getenv('POSTGRES_DB_NAME'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
 }
 
 
@@ -166,10 +163,19 @@ ASGI_APPLICATION = 'my_django.asgi.application'
 
 CHANNEL_LAYERS = {
     'default': {
-        "BACKEND": "channels.layers.InMemoryChannelLayer",
-        #'CONFIG': {
-        #    "hosts": [('127.0.0.1', 6379)],
-        #},
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [(REDIS_HOST, REDIS_PORT)],
+        },
     },
 }
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": f"redis://{REDIS_HOST}:{REDIS_PORT}",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}

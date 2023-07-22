@@ -9,8 +9,7 @@ kubernetes-config
 # C extensions
 *.so
 
-
-# env/
+db.*
 
 # Distribution / packaging
 .Python
@@ -127,10 +126,10 @@ celerybeat.pid
 
 # Environments
 .venv
-# env/
+env/
 venv/
 # ENV/
-# env.bak/
+env.bak/
 venv.bak/
 
 # Spyder project settings
