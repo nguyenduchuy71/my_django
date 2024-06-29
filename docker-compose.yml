@@ -1,9 +1,9 @@
-version: '3.7'
+version: "3.7"
 
 services:
   db:
     image: postgres:13.3-alpine
-    volumes: 
+    volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file: .env
     expose:
@@ -16,7 +16,7 @@ services:
     ports:
       - "${PUBLIC_PORT}:${PORT}"
     env_file: .env
-    volumes: 
+    volumes:
       - .:/usr/src/app
     depends_on:
       - redis
@@ -25,7 +25,7 @@ services:
 
   redis:
     restart: always
-    image: redis:alpine
+    image: redis:7.0-alpine
     expose:
       - "${REDIS_PORT}"
 
