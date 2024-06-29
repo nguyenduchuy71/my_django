@@ -1,40 +1,119 @@
-li a {
-    color: green;
-    text-decoration: none;
+body {
+  font-family: "Roboto", "san-serif";
 }
-li a:hover{
-    color: blue;
-    text-decoration: underline;
+/* width */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+li a {
+  color: green;
+  text-decoration: none;
+}
+li a:hover {
+  color: blue;
+  text-decoration: underline;
 }
 
 .alert {
-    padding: 20px;
-    background-color: #f44336;
-    color: white;
-    opacity: 1;
-    transition: opacity 0.6s;
-    margin: 15px 0;
+  padding: 10px;
+  background-color: transparent;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin: 15px 0;
 }
-  
-.alert-success {background-color: #04AA6D;}
-.alert-info {background-color: #2196F3;}
-.alert-warning {background-color: #ff9800;}
+
+.alert-success {
+  background-color: #04aa6d;
+}
+.alert-error {
+  background-color: #f44336;
+}
+.alert-info {
+  background-color: #2196f3;
+}
+.alert-warning {
+  background-color: #ff9800;
+}
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+  color: black;
 }
 
-.hide{
-    display: none;
+.hide {
+  display: none;
+}
+
+li a {
+  color: green;
+  text-decoration: none;
+}
+li a:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+  opacity: 1;
+  transition: opacity 0.6s;
+  margin: 15px 0;
+}
+
+.alert-success {
+  background-color: #04aa6d;
+}
+.alert-info {
+  background-color: #2196f3;
+}
+.alert-warning {
+  background-color: #ff9800;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+.hide {
+  display: none;
 }

@@ -1,5 +1,4 @@
-{% include "polls/base.html" %} 
-{% block content %}
+{% include "polls/base.html" %} {% block content %}
 <form method="post">
   {% csrf_token %}
   <div
@@ -41,6 +40,7 @@
 </form>
 <script>
   $(document).ready(function () {
+    $("#modalUpdate").modal({ backdrop: "static", keyboard: false });
     $("#modalUpdate").modal("show");
   });
 </script>
